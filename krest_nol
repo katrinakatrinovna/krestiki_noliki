@@ -1,0 +1,49 @@
+board = list(range(1, 10))
+def draw_board(board):
+    print('-' * 13)
+    for x in range(3):
+        print('|', board[0 + x*3], '|', board[1 + x*3], '|', board[2 + x*3], '|')
+        print('-'*13)
+
+def steps_board(step, token):
+    ind = board.index(step)
+    board[ind] = token
+
+def check_win():
+    win = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+    the_winner = ''
+    for i in win:
+        if board[i[0]] == board[i[1]] == board[i[2]] == 'X':
+            the_winner = 'X'
+        if board[i[0]] == board[i[1]] == board[i[2]] == '0':
+            the_winner = '0'
+    return the_winner
+
+game_over = False
+player_1 = True
+counter = 0
+while game_over == False:
+    draw_board(board)
+    if player_1 == True:
+        token = 'X'
+        step = int(input('Первый игрок, ваш ход:'))
+        counter +=1
+    else:
+        token = '0'
+        step = int(input('Второй игрок, ваш ход:'))
+        counter +=1
+    steps_board(step, token)
+    winner = check_win()
+
+    if winner != '' or counter >= 9:
+        game_over = True
+    else:
+        game_over = False
+
+    player_1 = not(player_1)
+
+draw_board(board)
+if winner != '':
+    print('Победа', winner)
+if counter == 9:
+    print('Ничья!')
